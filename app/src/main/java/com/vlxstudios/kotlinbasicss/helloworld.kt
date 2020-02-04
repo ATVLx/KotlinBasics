@@ -24,6 +24,9 @@ fun main() {
     println(arguementOrderchanger( Name= "Vishal",greeting = "Hello"))
 
     val vishal = vlx()
+    val person = Person("Peter","Parker")
+    person.nickName = "Vishal"
+
    /* println("Check Range please enter min:")
     var a = readLine()!!.toInt()
     println("Entered value is $a for min please enter the max: ")
