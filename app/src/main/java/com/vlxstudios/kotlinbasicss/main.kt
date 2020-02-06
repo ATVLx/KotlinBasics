@@ -36,7 +36,7 @@ class vlx(val firstname: String = "Peter", val lastName: String = "Parker") {
 }
 
 
-class Person(firstName:String,lastName:String){
+class Person(val firstName:String, val lastName:String){
     var nickName: String? = null
 
     set(value){
@@ -46,5 +46,10 @@ class Person(firstName:String,lastName:String){
     get(){
         println("The Returned value is $field")
         return field
+    }
+
+    fun printInfo(){
+        val nickNameToPrint = nickName?:"No Nick Name"
+        println("$firstName $nickNameToPrint $lastName")
     }
 }
