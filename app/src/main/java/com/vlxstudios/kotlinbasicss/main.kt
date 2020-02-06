@@ -36,7 +36,7 @@ class vlx(val firstname: String = "Peter", val lastName: String = "Parker") {
 }
 
 
-class Person(val firstName:String, val lastName:String){
+class Person(val firstName:String = "Peter", val lastName:String="Parker"){
     var nickName: String? = null
 
     set(value){
