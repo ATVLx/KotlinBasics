@@ -28,7 +28,7 @@ fun getuserinnut()
     {
 
         println("Please Enter your Number in which you want to place $player")
-         var a:Int = readLine()!!.toInt()
+        var a:Int = readLine()!!.toInt()
         if(Xando[a-1] == "X" || Xando[a-1] == "O")
         {
             while (!placed)
@@ -41,7 +41,6 @@ fun getuserinnut()
                  if(Xando[a-1] == "X" || Xando[a-1] == "O")
                 {
                     placed = false
-
                 } else {
                     placed =true
                 }
@@ -49,15 +48,15 @@ fun getuserinnut()
                  */
             }
         }
-         Xando[a-1] = player.toString();
-         displayMatrix()
+        Xando[a-1] = player.toString();
+        displayMatrix()
         SwitchPlayer()
-         count++
-            if(count > 2)
-            {
-                checkX()
-                checkO()
-            }
+        count++
+        if(count > 2)
+        {
+            checkX()
+            checkO()
+        }
 
     }
 
@@ -73,9 +72,9 @@ fun SwitchPlayer( )
 {
     if(player == "X")
     {
-     player = "O"
+        player = "O"
     }
-   else if (player == "O")
+    else if (player == "O")
     {
         player = "X"
     } else {
