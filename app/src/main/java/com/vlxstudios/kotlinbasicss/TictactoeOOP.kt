@@ -13,22 +13,8 @@ class GameMatrix {
     var recivedValue: Int? = 0
     var printed: Boolean = false
 
-    fun initaliseMatrix(){
-        var rowTemp = 0
-        var rowcol = 0
-        var placeHolder = 0
-        for (columnMatrix in board){
-            rowcol++
-            for(rowMatrix in columnMatrix){
-                rowTemp++
-                placeHolder++
-                foundValue(rowTemp,rowcol)
-              //  placeElements(rowTemp,rowcol,placeHolder)
 
-            }
 
-        }
-    }
     fun placeElements(row:Int,col:Int,value:Int){
         board[row][col] = value.toString()
     }
@@ -46,49 +32,47 @@ class GameMatrix {
         }
 
 
-    fun giveValue(number: Int) {
+    fun giveValue(number: Int, playerType:String) {
         recivedValue = number
-        checkValue()
+        println("REcived number is : $number")
+       checkValue(playerType)
     }
 
-    fun checkValue() {
-        var rowTemp:Int = -1
-        var rowcol:Int = -1
+    fun checkValue(playerInitials:String) {
 
+        var row:Int = -1
+        var column:Int = -1
         printed = false
-        for (columnArray in board) {
-            rowcol++
-            for (columnval in columnArray) {
-                rowTemp++
-                if (recivedValue == columnval.toInt()) {
+        for (i in board) {
+
+            row++
+            for (j in i) {
+                column++
+                if (recivedValue == j.toInt()) {
                     println(" Found")
 
-                    foundValue(rowTemp,rowcol)
-                    board[rowcol][rowTemp] = "X"
-
-
+                   DebugfoundValue(row,column)
+                    board[row][column] = playerInitials
                    displayMatrix()
-                    return
+                   return
 
                 } else {
-                   // rowTemp++
-                  // foundValue(rowTemp,rowcol)
-                        print("  Not Found!")
+
+                      //  println("  Not Found!")
 
                 }
 
             }
-            rowcol =0
-            rowTemp =0
+            column = -1
 
 
 
         }
-      //  println("found on row $recivedValue and column")
+
 
     }
 
-    fun foundValue( rowVal: Int,colVal:Int){
+    fun DebugfoundValue( rowVal: Int,colVal:Int){
         println("Found Values row: $rowVal and col: $colVal")
     }
 
@@ -96,23 +80,83 @@ class GameMatrix {
  //class end
 
 fun main() {
-    var game: GameMatrix = GameMatrix()
-   // game.initaliseMatrix()
-    game.displayMatrix()
-    println("Please Provide the input to check if it is existing or not")
-    var userInputProvider: GetUserInput = GetUserInput(readLine()!!.toInt())
+
+
+var maingame:MainGame = MainGame()
+    maingame.initializeGame()
+    maingame.runGame()
+
+
+    var userInputProvider: UserInput = UserInput()
     userInputProvider.giveValuetoMatrix()
 
 
 }
 
-class GetUserInput(var inputNumber: Int) {
-    var userInput = inputNumber
+open class UserInput { // class remains closed by Default so we need to add open before class inorder to inherit
+
+    private var userInput:Int = 0
+    var playerName:String =""
     var matrix: GameMatrix = GameMatrix()
-    fun giveValuetoMatrix() {
-        matrix.giveValue(userInput)
+        fun getUserInput(inputNumber:Int, player:String) {
+
+            userInput = inputNumber
+            playerName = player;
+
+         }
+
+
+         fun giveValuetoMatrix() {
+             matrix.giveValue(userInput.toInt(),playerName)
+
+        }
+
+            fun applyInputToMatrix(){
+               // matrix.checkValue()
+            }
+
+
+
+}
+
+class  MainGame  : UserInput(){
+
+
+    var gameOver : Boolean = false
+    var game: GameMatrix = GameMatrix()
+    var mainPlayer : String = "X"
+    var value:Int = 0
+
+
+    fun initializeGame(){
+        println("Hello Players this is X and O ( TICTACTOE ) Game, made with respect to Tickled media Pvt Ltd")
+        game.displayMatrix()
 
     }
 
 
+
+    fun playerSwitcher() = when (mainPlayer) {
+        "X" -> mainPlayer = "O"
+        "O" -> mainPlayer="X"
+        else -> mainPlayer="X"
+
+
+
+    }
+
+    fun runGame() {
+
+        gameOver = false
+        while(!gameOver){
+            println("Player: $mainPlayer's Turn please Enter the valid number from given Number Matrix ")
+            getUserInput(readLine()!!.toInt(),mainPlayer)
+            playerSwitcher()
+            giveValuetoMatrix()
+            //applyInputToMatrix()
+
+
+
+        }
+    }
 }
