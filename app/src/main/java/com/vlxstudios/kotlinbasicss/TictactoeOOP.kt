@@ -1,12 +1,15 @@
 package com.vlxstudios.kotlinbasicss
+import java.lang.Double.parseDouble
 
 class GameMatrix {
 
     var moves:Int =0
     var gameOver : Boolean = false
-    var printed:Boolean= false
+    var displayPlayer:Boolean = true
     var mainPlayer : String = "X"
     var board = initializeBoard()
+    var numeric: Boolean =true
+
 
 
     private fun initializeBoard(): Array<Array<String>>{
@@ -20,22 +23,32 @@ class GameMatrix {
 
     
     fun isGameOver():Boolean = gameOver
-    private var receivedValue: Int? = 0
+    private var receivedValue: String = "0"
 
     fun displayMatrix() {
-
+        displayPlayer = true
         for (columnArray in board) {
             for (columnval in columnArray) {
                   print(columnval)
-                print(" ")
-                }
-            println("")
-            }
+                    print(" ")
+                    }
+                println("")
+             }
+
 
         }
 
+    fun printPlayerStatus(){
+        if(displayPlayer){
+        println("    Player: $mainPlayer's Turn please Enter the valid number from given Number Matrix ")
+        }
+    }
 
-    fun giveValue(number: Int) {
+
+    fun giveValue(number:String) {
+
+
+
         receivedValue = number
         checkValue(mainPlayer)
         moves++
@@ -43,51 +56,67 @@ class GameMatrix {
 
     private fun checkValue(playerInitials:String) {
 
+
+
+         var a = receivedValue.toCharArray()
+         for(i in a){
+             if(i>='a'){
+                 numeric =false
+             }else
+                 if(i <='A'){
+                     numeric = true
+                 }
+         }
+
+
+
+        if (receivedValue!!.toInt() < 1 || receivedValue!!.toInt() >9){
+            println("Please enter the valid number in available matrix")
+            return
+        }
+        if(numeric){
+
          var row:Int = -1
          var column:Int = -1
-         printed = false
          for (i in board) {
             row++
             for (j in i) {
                 column++
 
 
-                if (receivedValue.toString() == j) {
+                if (receivedValue == j) {
                    //found
+                    playerSwitcher()
                     board[row][column] = playerInitials
                    displayMatrix()
-                    playerSwitcher()
+                    checkWinner(playerInitials)
+                    printPlayerStatus()
 
                    return
 
-                } else {
-                    if(!printed){
-                        println("Please enter into Another space")
-                        printed = true
-                       // playerSwitcher()
-                    }
+                }
 
-                     }
 
             }
             column = -1 //reset column when it completes
 
+            }
 
-
+        }else {
+            println("Please enter the valid Number")
+            return
         }
+    }
 
 
-
-
-
-
-        }
 
     fun playerSwitcher() = when (mainPlayer) {
         "X" -> mainPlayer = "O"
         "O" -> mainPlayer = "X"
         else -> mainPlayer = "X"
     }
+
+
 
    private fun restartGame(){
         var wrongInput:Boolean
@@ -97,6 +126,7 @@ class GameMatrix {
         if(value == "y" || value == "Y"){
             displayMatrix()
             mainPlayer = "X"
+            displayPlayer = true
         }
         else if(value == "n" || value == "N"){
             println("Thankyou for playing")
@@ -125,30 +155,30 @@ class GameMatrix {
 
         if( moves >=3) {
             if (board[0][0] == playerType && board[0][1] == playerType && board[0][2] == playerType) {
-                println(""); println("$playerType Player wins")  ; restartGame() //; gameMgr.gameOver=gameOver
+                println(""); println("$playerType Player wins"); displayPlayer =false  ; restartGame() //; gameMgr.gameOver=gameOver
             } else// upperDeck
                 if (board[1][0] == playerType && board[1][1] == playerType && board[1][2] == playerType) {
-                    println("");  println("$playerType Player wins")  ; restartGame()//; gameMgr.gameOver=gameOver
+                    println(""); println("$playerType Player wins"); displayPlayer =false  ; restartGame()//; gameMgr.gameOver=gameOver
                 } else // middle Deck
                     if (board[2][0] == playerType && board[2][1] == playerType && board[2][2] == playerType) {
-                        println("");  println("$playerType Player wins")  ; restartGame()//; gameMgr.gameOver=gameOver
+                        println(""); println("$playerType Player wins"); displayPlayer =false  ; restartGame()//; gameMgr.gameOver=gameOver
                     } else// lower Deck
                         if (board[0][0] == playerType && board[1][1] == playerType && board[2][2] == playerType) {
-                            println("");  println("$playerType Player wins") ; restartGame()//; gameMgr.gameOver=gameOver
+                            println(""); println("$playerType Player wins"); displayPlayer =false  ; restartGame()//; gameMgr.gameOver=gameOver
                         } else// Left slash Deck
                             if (board[0][1] == playerType && board[1][1] == playerType && board[2][1] == playerType) {
-                                println(""); println("$playerType Player wins")  ; restartGame()//; gameMgr.gameOver=gameOver
+                                println(""); println("$playerType Player wins"); displayPlayer =false  ; restartGame()//; gameMgr.gameOver=gameOver
                             } else// center vertical deck
                                 if (board[0][2] == playerType && board[1][1] == playerType && board[2][0] == playerType) {
-                                    println(""); println("$playerType Player wins")  ; restartGame()//; gameMgr.gameOver=gameOver
+                                    println(""); println("$playerType Player wins"); displayPlayer =false  ; restartGame()//; gameMgr.gameOver=gameOver
                                 } // Right Slash Deck
                                 else// center vertical deck
                                     if (board[0][0] == playerType && board[1][0] == playerType && board[2][0] == playerType) {
-                                        println(""); println("$playerType Player wins")  ;  restartGame()//; gameMgr.gameOver=gameOver
+                                        println(""); println("$playerType Player wins"); displayPlayer =false  ; restartGame()//; gameMgr.gameOver=gameOver
                                     }
                                     else
                                         if (board[0][2] == playerType && board[1][2] == playerType && board[2][2] == playerType) {
-                                            println(""); println("$playerType Player wins")  ; restartGame()//; gameMgr.gameOver=gameOver
+                                            println(""); println("$playerType Player wins"); displayPlayer =false  ; restartGame()//; gameMgr.gameOver=gameOver
                                         }
         }
 
@@ -167,10 +197,6 @@ fun main() {
     mainGame.runGame()
 
 
-  //  var userInputProvider: UserInput = UserInput()
-   // userInputProvider.giveValueToMatrix()
-
-
 }
 
 open class UserInput { // class remains closed by Default so we need to add open before class inorder to inherit
@@ -182,7 +208,7 @@ open class UserInput { // class remains closed by Default so we need to add open
          var matrix: GameMatrix = GameMatrix()
 
 
-        fun getUserInput(inputNumber:Int) {
+        fun getUserInput(inputNumber:String) {
              matrix.giveValue(inputNumber)
          }
 
@@ -201,8 +227,9 @@ class  MainGame  : UserInput(){
 
 
     var gameOver : Boolean = false
-    var game: GameMatrix = GameMatrix()
-    var playerName = game.mainPlayer
+     private val game: GameMatrix = GameMatrix()
+
+
 
 
     var value:Int = 0
@@ -219,18 +246,12 @@ class  MainGame  : UserInput(){
     fun runGame() {
 
         gameOver = false
+        game.printPlayerStatus()
         while(!gameOver){
 
-                playerName = game.mainPlayer
-                println("    Player: $playerName's Turn please Enter the valid number from given Number Matrix ")
-                getUserInput(readLine()!!.toInt())
-                game.playerSwitcher()
-                matrix.checkWinner(playerName)
+                getUserInput(readLine()!!)
+
                 gameOver = matrix.isGameOver()
-
-
-
-
 
         }
 
