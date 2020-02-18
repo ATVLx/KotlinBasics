@@ -6,25 +6,42 @@ class GameMatrix {
     var moves:Int =0
     var gameOver : Boolean = false
     var mainPlayer : String = "X"
-    var board = initializeBoard()
-    var numeric: Boolean =true
+    var board = initMatrix()
 
 
 
-    private fun initializeBoard(): Array<Array<String>>{
-        return arrayOf(
-            arrayOf("1", "2", "3"),
-            arrayOf("4", "5", "6"),
-            arrayOf("7","8","9")
-        )
-    }
-
-
-    
     fun isGameOver():Boolean = gameOver
     private var receivedValue: String = "0"
 
-    fun displayMatrix() {
+   private fun initMatrix(): ArrayList<ArrayList<String>> {
+       var tempBoardParentArray = ArrayList<ArrayList<String>>()
+
+       tempBoardParentArray.add(arrayListOf("", "", ""))
+       tempBoardParentArray.add(arrayListOf("", "", ""))
+       tempBoardParentArray.add(arrayListOf("", "", ""))
+
+        var count=0
+        var row = -1
+        var column = -1
+        for (i in tempBoardParentArray) {
+            row++
+           // count++
+            for (j in i) {
+                column++
+                count++
+                tempBoardParentArray[row][column] = count.toString()
+
+                }
+
+            column = -1 //reset column when it completes
+            }
+
+            return tempBoardParentArray
+        }
+
+
+
+        fun displayMatrix() {
 
         for (columnArray in board) {
             for (columnVal in columnArray) {
@@ -51,8 +68,6 @@ class GameMatrix {
 
     private fun checkValue(playerInitials:String) {
 
-        if(numeric){
-
          var row:Int = -1
          var column:Int = -1
          for (i in board) {
@@ -69,19 +84,16 @@ class GameMatrix {
                     checkWinner(playerInitials)
                       return
 
+                    }
+
+
                 }
-
-
-            }
             column = -1 //reset column when it completes
 
-            }
+         }
 
-        }else {
-            println("Please enter the valid Number")
-            return
-        }
     }
+
 
 
 
@@ -95,7 +107,7 @@ class GameMatrix {
 
    private fun restartGame(){
         var wrongInput:Boolean
-        board = initializeBoard()
+        board = initMatrix()
         println("Do you want to Restart the Game? Y/N")
         var value = readLine()
         if(value == "y" || value == "Y"){
