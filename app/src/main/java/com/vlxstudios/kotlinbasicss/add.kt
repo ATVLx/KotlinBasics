@@ -54,6 +54,14 @@ fun whileCheck() {
     }
 }
 
+fun fact(x:Int):Int{
+     tailrec fun factTail(y:Int,i:Int):Int{
+         if(y==0) return i
+         else return factTail(y-1,y*i)
+     }
+    return factTail(x,1)
+}
+
 fun DescribeObjTrype(obj: Any): String =
     when (obj) {
         1 -> "one"

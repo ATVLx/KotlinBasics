@@ -70,9 +70,15 @@ class GameMatrix {
 
          var row:Int = -1
          var column:Int = -1
+
+
          for (i in board) {
             row++
+
+
             for (j in i) {
+
+
                 column++
 
 
@@ -180,7 +186,7 @@ fun main() {
 
 
 
-    val userGame = UserInput()
+    val userGame = UserGame()
     userGame.initializeGame()
     userGame.runGame()
 
@@ -229,7 +235,7 @@ open class MainGame { // class remains closed by Default so we need to add open 
     }
 }
 
-class  UserInput  : MainGame(){
+class  UserGame  : MainGame(){
 
 
     fun runGame() {

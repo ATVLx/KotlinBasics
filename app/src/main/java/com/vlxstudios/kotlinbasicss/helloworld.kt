@@ -4,6 +4,7 @@ package com.vlxstudios.kotlinbasicss
 val i: Int = 0
 fun main() {
     println("Hello world!") // basic println
+    println("factorial of 5!: ${fact(5)}")
     // sum(5, 7)
     println("sum " + sum(5, 7)) // this is return function
     sum2(5, 6, 7) //this is void function
