@@ -14,7 +14,7 @@ class GameMatrix {
     private var receivedValue: String = "0"
 
    private fun initMatrix(): ArrayList<ArrayList<String>> {
-       var tempBoardParentArray = ArrayList<ArrayList<String>>()
+       val tempBoardParentArray = ArrayList<ArrayList<String>>()
 
        tempBoardParentArray.add(arrayListOf("", "", ""))
        tempBoardParentArray.add(arrayListOf("", "", ""))
@@ -213,7 +213,7 @@ open class MainGame { // class remains closed by Default so we need to add open 
         var numeric = true
         try {
 
-            val num = parseDouble(inputValue)
+            val num = parseDouble(inputValue) // never used but used to check if it is proper or not
         } catch (e: NumberFormatException) {
             numeric = false
         }
